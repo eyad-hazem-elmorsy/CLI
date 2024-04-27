@@ -28,11 +28,14 @@ program
                 return ret.json();
             }).then((ret) => {
                 const repos = ret.map(repo => repo.name);
+                if (!fs.existsSync('./repos/')) fs.mkdir('./repos/', (err) => {
+                    if (!err) console.log('Folder created');
+                });
                 fs.writeFile('./repos/' + answer.username + '.json', JSON.stringify(repos), 'utf8', () => {
                     console.log("Repo has been added");
                 })
             })
-        }) 
+        })
 });
 
 program.parse(process.argv);
